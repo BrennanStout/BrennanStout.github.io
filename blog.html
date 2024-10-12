@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-10-07">
+<meta name="dcterms.date" content="2024-10-12">
 
 <title>Brennan Stout - Blog</title>
 <style>
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -190,6 +224,10 @@ window.Quarto = {
 <span class="menu-text">assignment 4</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./assignment5.html"> 
+<span class="menu-text">assignment 5</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">blog</span></a>
   </li>  
@@ -215,7 +253,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 7, 2024</p>
+        <p class="date">October 12, 2024</p>
       </div>
     </div>
     
@@ -235,10 +273,13 @@ window.Quarto = {
   <li><a href="#dr-edward-tufte-the-future" id="toc-dr-edward-tufte-the-future" class="nav-link" data-scroll-target="#dr-edward-tufte-the-future">Dr Edward Tufte The Future</a></li>
   <li><a href="#comparison-of-visualization-styles" id="toc-comparison-of-visualization-styles" class="nav-link" data-scroll-target="#comparison-of-visualization-styles">Comparison of Visualization Styles</a></li>
   <li><a href="#how-to-improve-your-relationship-with-your-future-self" id="toc-how-to-improve-your-relationship-with-your-future-self" class="nav-link" data-scroll-target="#how-to-improve-your-relationship-with-your-future-self">HOW TO IMPROVE YOUR RELATIONSHIP WITH YOUR FUTURE SELF</a></li>
-  <li><a href="#bach-fugue-in-a-minor-bwv-904-visualized" id="toc-bach-fugue-in-a-minor-bwv-904-visualized" class="nav-link" data-scroll-target="#bach-fugue-in-a-minor-bwv-904-visualized">Bach, Fugue in A minor, BWV 904 Visualized</a></li>
+  <li><a href="#bach-fugue-in-a-minor-bwv-904-visualized" id="toc-bach-fugue-in-a-minor-bwv-904-visualized" class="nav-link" data-scroll-target="#bach-fugue-in-a-minor-bwv-904-visualized">Bach, Fugue in A minor, BWV 904 Visualized</a>
+  <ul class="collapse">
+  <li><a href="#demand-for-office-space" id="toc-demand-for-office-space" class="nav-link" data-scroll-target="#demand-for-office-space">Demand for office space</a></li>
+  </ul></li>
   </ul>
 </nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -269,9 +310,40 @@ window.Quarto = {
 <section id="bach-fugue-in-a-minor-bwv-904-visualized" class="level1">
 <h1>Bach, Fugue in A minor, BWV 904 Visualized</h1>
 <p>Visualizations of music are interesting in that they must give visual form to that which exists only in space a time. This particular one breaks the music down into elements which can be visualized like time, volume, notes, and instruments. Movement in this visualization is provided with the movement of time along the x axis while the notes are set along the y. Volume, instruments, and how long notes are held are show by the size and color of the elements moving along the time scale with the currently “played” notes highlighted in the center of the screen. While this works well for this piece of music, the options for this style of visualization to be used for others may not work well. The time scale for this is consistent, there is little ability to change the time signature being used as it is not represented beyond simple movement. Another problem is the musical scale being used, as it seems to be equivalent to that of a piano and as such is constrained to that scale and the half and whole step movements which it can represent. The line and circle elements may better show the movement between notes, but they too are also constrained to this scale. Finally, the lack of a legend hampers the ability of the user to deduce what elements represent, what sound and that deduction can only be done in motion. The ability of this visualization to show the music is exceptional, but it requires the attention of the viewer and not a little foreknowledge of what is being shown to be fully understood.</p>
+<section id="demand-for-office-space" class="level3">
+<h3 class="anchored" data-anchor-id="demand-for-office-space">Demand for office space</h3>
+<p>While this is a fairly simple bar chart, it does quite well in demonstrating the trend in the data. Between the well spaced labels and blue color scheme the chart is very readable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(city,ord),<span class="at">y=</span>stock,<span class="at">fill=</span>cont)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>,<span class="at">width=</span>.<span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>city,<span class="at">y=</span>tt, <span class="at">label =</span> city),<span class="at">size=</span><span class="dv">3</span>,<span class="at">color=</span><span class="st">"white"</span>,<span class="at">nudge_x=</span>.<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> stock,<span class="at">ymax=</span>tt<span class="fl">-.076</span>),<span class="at">width=</span><span class="dv">0</span>,<span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>city,<span class="at">y=</span>stock, <span class="at">label =</span> stock),<span class="at">vjust=</span><span class="fl">1.5</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>,<span class="st">"#0099ff"</span>,<span class="st">"#53baff"</span>))<span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="fl">2.8</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Increase in housing stock if all excess office space was converted into residences by 2030,%"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.line=</span><span class="fu">element_blank</span>(),<span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),<span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),<span class="at">legend.position.inside=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>          <span class="co">#panel.background=element_blank(),</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#00004d"</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border=</span><span class="fu">element_blank</span>(),<span class="at">panel.grid.major=</span><span class="fu">element_blank</span>(), <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(),<span class="at">plot.background=</span><span class="fu">element_blank</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="blog_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 
+</section>
 </section>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
@@ -364,7 +436,29 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1728072849017" data-listing-reading-time-sort="1" data-listing-word-count-sort="8">
+<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1728751213551" data-listing-reading-time-sort="2" data-listing-word-count-sort="302">
+<div class="thumbnail">
+<p><a href="./assignment5.html" class="no-external"></a></p><a href="./assignment5.html" class="no-external">
+<p class="card-img-top"><img src="assignment5_files\figure-html\unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./assignment5.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./assignment5.html" class="no-external">Assignment 5</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./assignment5.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./assignment5.html" class="no-external">home</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./assignment5.html" class="no-external"></a></p><a href="./assignment5.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1728750847560" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail">
 <p><a href="./index.html" class="no-external"></a></p><a href="./index.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -389,7 +483,7 @@ Brennan Stout
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1725992711000" data-listing-file-modified-sort="1725992711551" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="474">
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1725992711000" data-listing-file-modified-sort="1725992711551" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="474">
 <div class="thumbnail">
 <p><a href="./assignment1.html" class="no-external"></a></p><a href="./assignment1.html" class="no-external">
 <p class="card-img-top"><img src="assignment1_files\figure-html\unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
