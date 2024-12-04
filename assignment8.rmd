@@ -1,0 +1,215 @@
+---
+title: "Final"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(hrbrthemes)
+library(viridis)
+library(ggpubr)
+library(readxl)
+library(stringr)
+library(reshape2)
+library(hrbrthemes)
+
+tx <- read.csv("https://raw.githubusercontent.com/BrennanStout/DataVisualization/refs/heads/main/tx_final.csv")
+ny <- read.csv("https://raw.githubusercontent.com/BrennanStout/DataVisualization/refs/heads/main/ny_final.csv")
+for (n in 1:length(tx$Date)){
+  date_split <- str_split_fixed(ny$Date[n], "-", 2)
+  tx$year[n] <- as.integer(date_split[1])
+  tx$month[n] <- as.integer(date_split[2])
+  tx$Date2[n] <- paste(tx$year[n], "1", tx$month[n], sep="-")
+}
+tx$Date2 <- as.Date(tx$Date2)
+
+for (n in 1:length(ny$Date)){
+  date_split <- str_split_fixed(ny$Date[n], "-", 2)
+  ny$year[n] <- as.integer(date_split[1])
+  ny$month[n] <- as.integer(date_split[2])
+  ny$Date2[n] <- paste(ny$year[n], "1", ny$month[n], sep="-")
+}
+ny$Date2 <- as.Date(ny$Date2)
+
+ny_w_plot <- aggregate(x= ny$tavg,
+                       by = list(ny$year),      
+                       FUN = mean)
+colnames(ny_w_plot) <- c("Year", "tavg")
+ny_w_plot$tmax <- aggregate(x= ny$tmax,
+                            by = list(ny$year),      
+                            FUN = mean)$x
+ny_w_plot$pcp <- aggregate(x= ny$pcp,
+                            by = list(ny$year),      
+                            FUN = mean)$x
+ny_w_plot$total <- aggregate(x= ny$Total,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Robber <- aggregate(x= ny$Robbery,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Rape <- aggregate(x= ny$Rape,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Burglary <- aggregate(x= ny$Burglary,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Homicide <- aggregate(x= ny$Homicide,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Larceny <- aggregate(x= ny$Larceny,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$MVT <- aggregate(x= ny$Motor_Vehicle_Theft,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Arson <- aggregate(x= ny$Arson,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+ny_w_plot$Agg_Assault <- aggregate(x= ny$Aggrevated_Assault,
+                             by = list(ny$year),      
+                             FUN = mean)$x
+
+
+tx_w_plot <- aggregate(x= tx$tavg,
+                       by = list(tx$year),      
+                       FUN = mean)
+colnames(tx_w_plot) <- c("Year", "tavg")
+tx_w_plot$tmax <- aggregate(x= tx$tmax,
+                            by = list(tx$year),      
+                            FUN = mean)$x
+tx_w_plot$pcp <- aggregate(x= tx$pcp,
+                           by = list(tx$year),      
+                           FUN = mean, na.rm=TRUE)$x
+tx_w_plot$total <- aggregate(x= tx$Total,
+                             by = list(tx$year),      
+                             FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Robbery <- aggregate(x= tx$Robbery,
+                              by = list(tx$year),      
+                              FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Rape <- aggregate(x= tx$Rape,
+                            by = list(tx$year),      
+                            FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Burglary <- aggregate(x= tx$Burglary,
+                                by = list(tx$year),      
+                                FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Homicide <- aggregate(x = tx$Homicide,
+                                by = list(tx$year),      
+                                FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Larceny <- aggregate(x= tx$Larceny,
+                               by = list(tx$year),      
+                               FUN = mean, na.rm=TRUE)$x
+tx_w_plot$MVT <- aggregate(x= tx$Motor_Vehicle_Theft,
+                           by = list(tx$year),      
+                           FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Arson <- aggregate(x= tx$Arson,
+                             by = list(tx$year),      
+                             FUN = mean, na.rm=TRUE)$x
+tx_w_plot$Agg_Assault <- aggregate(x= tx$Aggrevated_Assault,
+                                   by = list(tx$year),      
+                                   FUN = mean, na.rm=TRUE)$x
+
+tx_m_plot <- aggregate(x= ny$tavg,
+                       by = list(ny$month),      
+                       FUN = mean)
+colnames(tx_m_plot) <- c("month", "tavg")
+
+tx_m_plot$Homicide <- aggregate(x = tx$Homicide,
+                                by = list(tx$month),      
+                                FUN = mean, na.rm=TRUE)$x
+
+```
+
+
+Row 
+-------------------------------------
+    
+### Chart 1
+    
+
+<iframe height="700" width="100%" frameborder="no" src="https://americogamarra.shinyapps.io/GeoVisMaps/"> </iframe>
+   
+Row {.tabset .tabset-fade}
+-------------------------------------
+   
+### Chart 2
+
+```{r,include=FALSE, out.width="60%"}
+temperatureColor <- "#69b3a2"
+priceColor <- rgb(0.2, 0.6, 0.9, 1)
+
+
+bp <- ggplot(tx_w_plot, aes(x=Year)) + 
+  geom_line(aes(y=tmax, color="Max Temperature")) +
+  geom_line(aes(y=Homicide*150, color="Homicide")) +
+  scale_y_continuous(
+    name = "Temperature",
+    sec.axis = sec_axis(~./150, name="Crime Count")
+  ) + 
+  theme_ipsum() +
+  theme(
+    axis.title.y = element_text(color = temperatureColor, size=13),
+    axis.title.y.right = element_text(color = priceColor, size=13),
+    legend.box.margin = margin(116, 6, 6, 6),
+    legend.key = element_rect(fill = "white", colour = "black"),
+    legend.title = element_blank(),
+    text = element_text(family = "serif"),
+    plot.title = element_blank()
+  ) +
+  #ggtitle("Crime against Temp, Annual Averages") + 
+  guides(shape=FALSE)
+
+bp2 <- ggplot(tx_w_plot, aes(x=Year)) + 
+  geom_line(aes(y=tavg, color="Average Temperature")) +
+  geom_line(aes(y=Homicide*150, color="Homicide")) +
+  scale_y_continuous(
+    name = "Temperature",
+    sec.axis = sec_axis(~./150, name="Crime Count")
+  ) + 
+  theme_ipsum() +
+  theme(
+    axis.title.y = element_text(color = temperatureColor, size=13),
+    axis.title.y.right = element_text(color = priceColor, size=13),
+    legend.box.margin = margin(116, 6, 6, 6),
+    legend.key = element_rect(fill = "white", colour = "black"),
+    legend.title = element_blank(),
+    text = element_text(family = "serif"),
+    plot.title = element_blank()
+  ) +
+  #ggtitle("Crime against Temp, Annual Averages") + 
+  guides(shape=FALSE)
+bp3 <- ggplot(tx_w_plot, aes(x=Year)) + 
+  geom_line(aes(y=pcp, color="Precipitation")) +
+  geom_line(aes(y=Homicide*50, color="Homicide")) +
+  scale_y_continuous(
+    name = "Precipitation",
+    sec.axis = sec_axis(~./50, name="Crime Count")
+  ) + 
+  theme_ipsum() +
+  theme(
+    axis.title.y = element_text(color = temperatureColor, size=13),
+    axis.title.y.right = element_text(color = priceColor, size=13),
+    legend.box.margin = margin(116, 6, 6, 6),
+    legend.key = element_rect(fill = "white", colour = "black"),
+    legend.title = element_blank(),
+    text = element_text(family = "serif"),
+    plot.title = element_blank()
+  ) +
+  #ggtitle("Crime against Temp, Annual Averages") + 
+  guides(shape=FALSE)
+
+ggarrange(bp, bp2, bp3 + rremove("x.text"), 
+          labels = c("A", "B", "C"),
+          ncol = 3, nrow = 1)
+
+```   
+ 
+### Chart 3
+    
+```{r, out.width="50%"}
+ggplot(tx_m_plot, aes(x=month)) + 
+  geom_line(aes(y=tavg, color="tmemp")) +
+  geom_line(aes(y=Homicide*50, color="Homicide"))
+```
