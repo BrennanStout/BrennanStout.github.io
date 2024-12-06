@@ -151,27 +151,27 @@
     "href": "assignment8_act.html",
     "title": "assignment 8",
     "section": "",
-    "text": "&lt;iframe height=“700” width=“100%” frameborder=“no” src=“https://americogamarra.shinyapps.io/GeoVisMaps/”{=html}"
+    "text": "&lt;iframe height=“700” width=“100%” frameborder=“no” src=“https://americogamarra.shinyapps.io/GeoVisMaps2/”{=html}"
   },
   {
     "objectID": "assignment8_act.html#row",
     "href": "assignment8_act.html#row",
     "title": "assignment 8",
     "section": "",
-    "text": "&lt;iframe height=“700” width=“100%” frameborder=“no” src=“https://americogamarra.shinyapps.io/GeoVisMaps/”{=html}"
+    "text": "&lt;iframe height=“700” width=“100%” frameborder=“no” src=“https://americogamarra.shinyapps.io/GeoVisMaps2/”{=html}"
   },
   {
     "objectID": "assignment8_act.html#row-1",
     "href": "assignment8_act.html#row-1",
     "title": "assignment 8",
     "section": "Row",
-    "text": "Row\n\nChart 2\n\n\nChart 3\n\nggplot(tx_m_plot, aes(x=month)) + \n  geom_line(aes(y=tavg, color=\"tmemp\")) +\n  geom_line(aes(y=Homicide*50, color=\"Homicide\"))"
+    "text": "Row\n\nChart 3\n\nggplot(tx_m_plot, aes(x=month)) + \n  geom_line(aes(y=tavg, color=\"temp\")) +\n  geom_line(aes(y=Homicide*50, color=\"Homicide\"))\n\n\n\n\n\n\n\n\n\n\nChart 4\n\ntemperatureColor &lt;- \"#69b3a2\"\npriceColor &lt;- rgb(0.2, 0.6, 0.9, 1)\n\nggplot(tx_w_plot, aes(x=Year)) + \n  geom_line(aes(y=tmax, color=\"Max Temperature\")) +\n  geom_line(aes(y=Homicide*150, color=\"Homicide\")) +\n  scale_y_continuous(\n    name = \"Temperature\",\n    sec.axis = sec_axis(~./150, name=\"Crime Count\")\n  ) + \n  theme_ipsum() +\n  theme(\n    axis.title.y = element_text(color = temperatureColor, size=13),\n    axis.title.y.right = element_text(color = priceColor, size=13),\n    legend.box.margin = margin(116, 6, 6, 6),\n    legend.key = element_rect(fill = \"white\", colour = \"black\"),\n    legend.title = element_blank(),\n    text = element_text(family = \"serif\"),\n    plot.title = element_blank()\n  ) +\n  #ggtitle(\"Crime against Temp, Annual Averages\") + \n  guides(shape=FALSE)\n\nWarning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use \"none\" instead as\nof ggplot2 3.3.4.\n\n\nWarning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family\nnot found in Windows font database\nWarning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family\nnot found in Windows font database\n\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database"
   },
   {
     "objectID": "Assignment8.html#row-1",
     "href": "Assignment8.html#row-1",
     "title": "Final",
     "section": "Row",
-    "text": "Row\n\nChart 2\n\n\nChart 3\n\nggplot(tx_m_plot, aes(x=month)) + \n  geom_line(aes(y=tavg, color=\"tmemp\")) +\n  geom_line(aes(y=Homicide*50, color=\"Homicide\"))"
+    "text": "Row\n\nChart 2\n\n\nChart 3"
   }
 ]
