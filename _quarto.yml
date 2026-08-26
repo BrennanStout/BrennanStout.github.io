@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Brennan Stout"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: research.qmd
+        text: Research
+      - href: teaching.qmd
+        text: Teaching
+      - href: cv.qmd
+        text: CV
+      - href: blog.qmd
+        text: Blog
+      - href: epps6302
+        text: EPPS 6302 Assignments
+    right:
+      - icon: github
+        href: https://github.com/BrennanStout
+      - icon: envelope
+        href: mailto:brennan.stout@utdallas.edu
+format:
+  html:
+    theme: [cyborg, custom.scss]
+    css: styles.css #fonts and styles, or default of theme
+    toc: true
+
+editor: visual
+

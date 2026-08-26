@@ -1,0 +1,18 @@
+---
+title: "teaching"
+---
+
+## Teaching Assistant
+**GISC 7360: GIS Pattern Analysis**
+*Fall 2026* <!-- · [Course materials](https://github.com/USERNAME/epps6302) -->
+**GISC 6301: GIS Data Analysis Fundamentals**
+*Fall 2026* 
+**EPPS6326 & GISC6323: Machine Learning and AI for Socio-Economic and Georeferenced Data**
+*Spring 2026*
+**GISC 2307: Digital Earth**
+*Fall 2024*
+
+## Teaching Associate
+**GISC 2307: Digital Earth**
+*Fall 2025*
+*Spring 2025*

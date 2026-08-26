@@ -1,0 +1,11 @@
+---
+title: "About"
+---
+
+Brennan Stout TA & GIS Doctoral Student at UTD
+
+Portfolio
+
+```{=html}
+<iframe width="800" height="700" src="https://storymaps.arcgis.com/stories/b9f9226254bd46e7afe09fd97576f82b" title="Webpage example"></iframe>
+```

@@ -1,0 +1,11 @@
+---
+title: "research"
+---
+
+## Working Papers
+
+**Small area estimation of tobacco consumption with microdata** *with Dr. Tiefelsdorf* — under abstract review
+
+<!-- [[PDF](papers/paper.pdf)] [[Code](https://github.com/USERNAME/project)] -->
+
+**Data-generating process.** This project uses data from the US Census Bureau and tobacco data from the Behavior Risk Factor Surveillance System. It uses small area estimation techniques to model tobacco consumption at the county level.
