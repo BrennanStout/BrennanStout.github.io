@@ -18,7 +18,7 @@ website:
         text: CV
       - href: blog.qmd
         text: Blog
-      - href: epps6302
+      - href: epps6302.qmd
         text: EPPS 6302 Assignments
     right:
       - icon: github

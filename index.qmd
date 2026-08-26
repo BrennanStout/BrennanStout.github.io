@@ -20,15 +20,14 @@ format:
     theme: cyborg
 ---
 
-I am a PhD student in Geospatial Information Sciences at the
-University of Texas at Dallas. My research examines ...
-## Research Interests
+I am a PhD student in Geospatial Information Sciences at the University of Texas at Dallas. My research focus on the areas of demographic and spatial modeling.
+
+Research Interests:
+
 - Small Area Estimation
+
 - Epidemiology
+
 - Bayesian modeling
 
-[About](about.qmd)
-[Research](research.qmd)
-[Teaching](teaching.qmd)
-[CV](cv.qmd)
-[Blog](blog.qmd)
+[About](about.qmd) [Research](research.qmd) [Teaching](teaching.qmd) [CV](cv.qmd) [Blog](blog.qmd)
