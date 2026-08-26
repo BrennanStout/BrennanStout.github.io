@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-10-30">
+
+<title>Blog – Brennan Stout</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-708e21b7cc40132fa553425fcd620c0e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: #39BEB1;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: #39BEB1;
+      }
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Brennan Stout</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/BrennanStout"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:brennan.stout@utdallas.edu"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Blog</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 30, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-trap-of-big-data" id="toc-the-trap-of-big-data" class="nav-link active" data-scroll-target="#the-trap-of-big-data">The Trap of Big Data</a></li>
+  <li><a href="#dr-edward-tufte-the-future" id="toc-dr-edward-tufte-the-future" class="nav-link" data-scroll-target="#dr-edward-tufte-the-future">Dr Edward Tufte The Future</a></li>
+  <li><a href="#comparison-of-visualization-styles" id="toc-comparison-of-visualization-styles" class="nav-link" data-scroll-target="#comparison-of-visualization-styles">Comparison of Visualization Styles</a></li>
+  <li><a href="#how-to-improve-your-relationship-with-your-future-self" id="toc-how-to-improve-your-relationship-with-your-future-self" class="nav-link" data-scroll-target="#how-to-improve-your-relationship-with-your-future-self">HOW TO IMPROVE YOUR RELATIONSHIP WITH YOUR FUTURE SELF</a></li>
+  <li><a href="#bach-fugue-in-a-minor-bwv-904-visualized" id="toc-bach-fugue-in-a-minor-bwv-904-visualized" class="nav-link" data-scroll-target="#bach-fugue-in-a-minor-bwv-904-visualized">Bach, Fugue in A minor, BWV 904 Visualized</a>
+  <ul class="collapse">
+  <li><a href="#demand-for-office-space" id="toc-demand-for-office-space" class="nav-link" data-scroll-target="#demand-for-office-space">Demand for office space</a></li>
+  <li><a href="#r-shiny-app" id="toc-r-shiny-app" class="nav-link" data-scroll-target="#r-shiny-app">R Shiny App</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div></div></div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<p><a href="./index.html">home</a></p>
+<section id="the-trap-of-big-data" class="level1">
+<h1>The Trap of Big Data</h1>
+<p>Big data anlaytics pitfall Overfitting and overparameterization</p>
+<p>In the world of big data, the Google Flu Trends (GFT) is a well know failure to point at as a testament to the weakness of big data and the pitfall those who study it can fall into. For the GFT itself, this was an attempt to predict outbreaks of flu-like illnesses through the analysis of terms being searched by individuals. While the ability to predict outbreaks with this trend model worked for a time, it began to become less consistent with the CDC data on when the outbreaks actually were. The article proposes a couple different reasons as to why these errors began to appear and why these errors show up in other big data projects. First among these reasons, is that of the perception of big data as the ultimate form of data analysis. That is, with enough data the needs of modeling, data validation, and other more traditional means of data analysis are not need. What this can result in, is a dataset that while massive and collected in seemingly a logical way does not have the hallmarks of an intentional dataset built to do analysis on. This brings us to the second reason, with a dataset built from inputs such as internet posts or other such fallible means to get a model that fits well is a challenge but possible. However, that possibility must be tempered by a full and complete understanding of the data and that different models while appearing to fit well could be concealing errors or tends to run counter to the perceived results. This, over fitting was another of the factor in the GFT issues, their 50 million search terms were fitting to only 1152 data points and while there was reasoning behind those terms that were precluded from the model some were highly correlated with the CDC’s data and likely should have been taken as a sign of overfitting. To compound this particular issue was that of the platform being used to gather this data, that being an ever changing ever evolving search engine. While such a problem is not necessarily unique to only large search engines as any data collection method may undergo updates or refinements over their lifetime, the extent to which large search engines may shift is difficult to ascertain and even more so model the impacts of. And finally, the third and final issue with the GFT and big data projects, that of reproducibility a cornerstone of science as we understand it. These big data projects with their oversized datasets and propensity towards proprietary collection methods can produce results which cannot be reproduced. This was the case with the GFT, as the researchers obscured the search terms being looked for, combined with the inability for Google to release the full dataset means this project was irreplicable and as a result with the deterioration of the predictive power of the model the GFT at this point only has real use as a warning of the pitfalls of big data.</p>
+</section>
+<section id="dr-edward-tufte-the-future" class="level1">
+<h1>Dr Edward Tufte The Future</h1>
+<p>The main take away from this talk I feel is that while the mission and objectives of data visualization are fairly clear, the achieving of them are far and away more difficult. A large part of this gap is that the in order to communicate data most effectively one needs to deeply understand not just the data but also how you as a researcher operate and understands yourself. According to Dr.&nbsp;Tufte, the problems arising from an incomplete understanding can take several forms. Perhaps the simplest presented was that of data error, inconsistent formats and incomplete datasets that go unrecognized through the analysis. On the part of the researcher, bias can arise from things like overfocusing on a particular subset or a desire to adjust the fit of the model slightly. These areas of bias can also be externally introduced, through the pressure of sponsors or even the understanding that the method being used is the “best practice”. All these can cause bias or error unless accounted for and accounted for well. Dr.&nbsp;Tufte’s stress this significantly, that humans are fallible, and analysis will follow especially when what is being researched are humans. However, if the one is able to reach the stage of communicating the results of the research to another person the difficulty now comes from choosing from among the myriad of methods to show, tell, or make clear which one to use and advancements in technology have only made this decision even harder. As is put forward in the presentation, data visualization has the purpose of assisting the reasoning of the viewer about what is being shown. For this reason, visualizations are always to a degree unique to the dataset and the person behind it. Even for the same data, a different person will understand it differently and wish to place the focus of the visualization on what they want to communicate from that understanding. There are however, if not better than more effective means of doing that communication, Dr.&nbsp;Tufte highlights elements such as contrasts, comparisons, and the use of space. There should be no extraneous elements or choices made for the sake of simplicity alone. This strikes at the central point of his talk, that excellence does not come from half measures. Communication of any form, operates at the highest level when the one doing the communicating has the knowledge of the subject and the understanding of precisely which elements of that knowledge must be comprehended by the other party. And while those elements are ambiguous and the subject unspecified, when it is used in the realm of science the understood goal should be that the truth is being sought in good faith and what is being communicated aligns as best as is able with that truth.</p>
+</section>
+<section id="comparison-of-visualization-styles" class="level1">
+<h1>Comparison of Visualization Styles</h1>
+<p>Within data visualization, there are a vast range of ways to tell stories with data. And while there do tend to be best practices or optimal strategies for doing so, there is still a great deal of room for creativity and style. An example of the differences in style between schools of data visualization are those of Colin Ware and Leland Wilkinson. For Wilkinson, with the book The Grammer of Graphics he presents an introduction to how and why statistical graphics are done. As a result, while there are a great many examples of graphics and graphical elements, most of them are comparatively simple. This is a book on how to perform visualization and the graphics are built in such a way that they can easily be understood and replicated. Use of colors is limited to only when necessary and all other graphics use the other aesthetic attributes. As presented by the book, these are Form, Color, Texture, and Optics with the Form and brightness of the Color attribute being the seeming to be the most used in the book. In contrast, Ware and his book Information Visualization: Perception for Design places more focus on how the graphics is understood by the viewer and the importance of how perception works. This is a book on the why visualization is important, the parts of a graphic that are of the most use and how can one tell a story with them. What arises from this focus is the use of much more complex graphics using many more individual elements and methods than would appear in Wilkinson’s work. These graphics are for the demonstration of a theoretical topic, where the story is told in the graphic itself and not in the creation of it as would be the case in Wilkinson. Many of the graphics also use networks, connections and a degree of movement through the plots to achieve more complete and self-contained graphics. While these are better to fully communicate the information in question, they do lose a degree of understandability in that complexity while addressed in the book can still be off putting. To contrast, while Wilkinson’s work tends to come across as more understandable, he does not focus on since high-minded topics and instead works off the goal of providing a pathway in how to effectively and fully live into those topics as presented by Ware. Both books have great value in this, Ware has the why visualization is a necessary part of not just science communication but also any digital avenue of communication while Wilkinson has the how to build those visualizations in meaningful ways and the value behind each element in the toolbox of the scientist.</p>
+<p>Wilkinson, L. 2005. The grammar of graphics (2nd ed.). Springer Science. Chicago, IL.</p>
+<p>Ware, C. 2021. Information visualization: perception for design (Fourth edition.). Morgan Kaufmann. Cambridge, MA.</p>
+</section>
+<section id="how-to-improve-your-relationship-with-your-future-self" class="level1">
+<h1>HOW TO IMPROVE YOUR RELATIONSHIP WITH YOUR FUTURE SELF</h1>
+<p>This paper focuses on the underlying parts of data analysis, namely those of coding. Bowers thesis of this paper being that all data analysis stems from programming and that programming in of itself is a means of communicating data both to those using the data but also the scientists themselves down the line. This involves both making the code clear and functional, but also future proofing the code. That is evaluating the libraries and functions being that that they will retain their functions for the full lifespan of the project and the use of comments to fully, completely, and in a proper style communicate what the code is doing and what the full flow of the project is. And while this works to keep the code clear, at the level above there is keeping the file organization clear and logical. To keep this organization, clear in the future, this should also be paired with documentation of some form. While these may seem like the obvious best practices, they do take time and effort to do well and may be forgotten or overlooked in the heat of the moment. When this occurs, it might take massively more time to correct that lack than it would have at the time when that information was still in the scientists’ mind. Regarding the data, while there are a million ways to get data into a project the number of ways that work to clearly and consistently preserve the data for both future use in the code but in a way that is accessible for other scientists to perform repetition research on the data is far more limited. It is important to note that this area falls less into the area of best practice and more into the responsibility of the researcher to do good science and provide the necessary proof of the results found, and the data used in the test is an integral part of that. Fortunately, as technology has advanced this has become easier to do, placing data into a public facing repository with proper documentation like GitHub is increasingly easy even for massive datasets. With these, it gives the additional benefits of version tracking and ease of coordination between team members. As the paper lays out, science is about communication, the best papers do not break ground in their process necessary but in how they communicate that process. That communication goes to every level of the project as well, since while the final project may be the end goal and ostensively the most important ever step along the way is communication to both of you but also a record of what the work is done, and that the conclusion drawn in the final product are both valid and meaningful. To be open, clear, and having your work checked is the basic assumption of science.</p>
+</section>
+<section id="bach-fugue-in-a-minor-bwv-904-visualized" class="level1">
+<h1>Bach, Fugue in A minor, BWV 904 Visualized</h1>
+<p>Visualizations of music are interesting in that they must give visual form to that which exists only in space a time. This particular one breaks the music down into elements which can be visualized like time, volume, notes, and instruments. Movement in this visualization is provided with the movement of time along the x axis while the notes are set along the y. Volume, instruments, and how long notes are held are show by the size and color of the elements moving along the time scale with the currently “played” notes highlighted in the center of the screen. While this works well for this piece of music, the options for this style of visualization to be used for others may not work well. The time scale for this is consistent, there is little ability to change the time signature being used as it is not represented beyond simple movement. Another problem is the musical scale being used, as it seems to be equivalent to that of a piano and as such is constrained to that scale and the half and whole step movements which it can represent. The line and circle elements may better show the movement between notes, but they too are also constrained to this scale. Finally, the lack of a legend hampers the ability of the user to deduce what elements represent, what sound and that deduction can only be done in motion. The ability of this visualization to show the music is exceptional, but it requires the attention of the viewer and not a little foreknowledge of what is being shown to be fully understood.</p>
+<section id="demand-for-office-space" class="level3">
+<h3 class="anchored" data-anchor-id="demand-for-office-space">Demand for office space</h3>
+<p>While this is a fairly simple bar chart, it does quite well in demonstrating the trend in the data. Between the well spaced labels and blue color scheme the chart is very readable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(city,ord),<span class="at">y=</span>stock,<span class="at">fill=</span>cont)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>,<span class="at">width=</span>.<span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>city,<span class="at">y=</span>tt, <span class="at">label =</span> city),<span class="at">size=</span><span class="dv">3</span>,<span class="at">color=</span><span class="st">"white"</span>,<span class="at">nudge_x=</span>.<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> stock,<span class="at">ymax=</span>tt<span class="fl">-.076</span>),<span class="at">width=</span><span class="dv">0</span>,<span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>city,<span class="at">y=</span>stock, <span class="at">label =</span> stock),<span class="at">vjust=</span><span class="fl">1.5</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>,<span class="st">"#0099ff"</span>,<span class="st">"#53baff"</span>))<span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="fl">2.8</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Increase in housing stock if all excess office space was converted into residences by 2030,%"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.line=</span><span class="fu">element_blank</span>(),<span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),<span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),<span class="at">legend.position.inside=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>          <span class="co">#panel.background=element_blank(),</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#00004d"</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border=</span><span class="fu">element_blank</span>(),<span class="at">panel.grid.major=</span><span class="fu">element_blank</span>(), <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(),<span class="at">plot.background=</span><span class="fu">element_blank</span>()) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="blog_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="r-shiny-app" class="level2">
+<h2 class="anchored" data-anchor-id="r-shiny-app">R Shiny App</h2>
+<iframe height="400" width="100%" frameborder="no" src="https://brenstout.shinyapps.io/Blog1/">
+</iframe>
+
+
+
+</section>
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1787779548898" data-listing-reading-time-sort="1" data-listing-word-count-sort="14">
+<div class="thumbnail"><a href="./about.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./about.html" class="no-external">About</a>
+</h3>
+<div class="delink listing-description"><a href="./about.html" class="no-external">
+Brennan Stout TA &amp; GIS Doctoral Student at UTD
+</a></div>
+</div>
+<div class="metadata">
+<a href="./about.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1787779109378" data-listing-reading-time-sort="1" data-listing-word-count-sort="10">
+<div class="thumbnail"><a href="./cv.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./cv.html" class="no-external">cv</a>
+</h3>
+<div class="delink listing-description"><a href="./cv.html" class="no-external">
+
+</a></div>
+</div>
+<div class="metadata">
+<a href="./cv.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1787779947050" data-listing-reading-time-sort="1" data-listing-word-count-sort="25">
+<div class="thumbnail"><a href="./index.html" class="no-external">
+
+<img loading="lazy" src="./profile.png" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./index.html" class="no-external">Brennan Stout</a>
+</h3>
+<div class="delink listing-description"><a href="./index.html" class="no-external">
+I am a PhD student in Geospatial Information Sciences at the University of Texas at Dallas. My research examines … ## Research Interests - Small Area Estimation -…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./index.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1787779421860" data-listing-reading-time-sort="1" data-listing-word-count-sort="27">
+<div class="thumbnail"><a href="./research.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./research.html" class="no-external">research</a>
+</h3>
+<div class="delink listing-description"><a href="./research.html" class="no-external">
+<strong>Paper Title Here</strong> <em>with A. Coauthor</em> — under review
+</a></div>
+</div>
+<div class="metadata">
+<a href="./research.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1787778983384" data-listing-reading-time-sort="1" data-listing-word-count-sort="41">
+<div class="thumbnail"><a href="./teaching.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./teaching.html" class="no-external">teaching</a>
+</h3>
+<div class="delink listing-description"><a href="./teaching.html" class="no-external">
+<strong>GISC 7360: GIS Pattern Analysis</strong> <em>Fall 2026</em> <!-- · [Course materials](https://github.com/USERNAME/epps6302) --> <strong>GISC 6301: GIS Data Analysis Fundamentals</strong> <em>Fall 2026</em> <strong>EPPS6326 &amp; GISC6323: Machine Learning and AI for Socio-Economic and…</strong><em></em><strong></strong><em></em>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./teaching.html" class="no-external">
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "research",
+    "section": "",
+    "text": "Paper Title Here with A. Coauthor — under review\n[PDF] [Code]\nTester sentence\nData-generating process. Where these data came from, who produced them, and what was decided in producing them."
+  },
+  {
+    "objectID": "research.html#working-papers",
+    "href": "research.html#working-papers",
+    "title": "research",
+    "section": "",
+    "text": "Paper Title Here with A. Coauthor — under review\n[PDF] [Code]\nTester sentence\nData-generating process. Where these data came from, who produced them, and what was decided in producing them."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Brennan Stout TA & GIS Doctoral Student at UTD\nPortfolio"
+  },
+  {
+    "objectID": "teaching.html",
+    "href": "teaching.html",
+    "title": "teaching",
+    "section": "",
+    "text": "GISC 7360: GIS Pattern Analysis Fall 2026  GISC 6301: GIS Data Analysis Fundamentals Fall 2026 EPPS6326 & GISC6323: Machine Learning and AI for Socio-Economic and Georeferenced Data Spring 2026 GISC 2307: Digital Earth Fall 2024"
+  },
+  {
+    "objectID": "teaching.html#teaching-assistant",
+    "href": "teaching.html#teaching-assistant",
+    "title": "teaching",
+    "section": "",
+    "text": "GISC 7360: GIS Pattern Analysis Fall 2026  GISC 6301: GIS Data Analysis Fundamentals Fall 2026 EPPS6326 & GISC6323: Machine Learning and AI for Socio-Economic and Georeferenced Data Spring 2026 GISC 2307: Digital Earth Fall 2024"
+  },
+  {
+    "objectID": "teaching.html#teaching-associate",
+    "href": "teaching.html#teaching-associate",
+    "title": "teaching",
+    "section": "Teaching Associate",
+    "text": "Teaching Associate\nGISC 2307: Digital Earth Fall 2025 Spring 2025"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "home"
+  },
+  {
+    "objectID": "blog.html#r-shiny-app",
+    "href": "blog.html#r-shiny-app",
+    "title": "Blog",
+    "section": "R Shiny App",
+    "text": "R Shiny App"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Brennan Stout",
+    "section": "",
+    "text": "I am a PhD student in Geospatial Information Sciences at the University of Texas at Dallas. My research examines … ## Research Interests - Small Area Estimation - Epidemiology - Bayesian modeling\nAbout Research Teaching CV Blog"
+  },
+  {
+    "objectID": "epps6302.html",
+    "href": "epps6302.html",
+    "title": "Epps 6302",
+    "section": "",
+    "text": "Placeholder"
+  }
+]
