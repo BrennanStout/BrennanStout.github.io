@@ -2,16 +2,16 @@
   {
     "objectID": "research.html",
     "href": "research.html",
-    "title": "research",
+    "title": "Research",
     "section": "",
-    "text": "Paper Title Here with A. Coauthor — under review\n[PDF] [Code]\nTester sentence\nData-generating process. Where these data came from, who produced them, and what was decided in producing them."
+    "text": "Small area estimation of tobacco consumption with microdata with Dr. Tiefelsdorf — under abstract review\n\nData-generating process. This project uses data from the US Census Bureau and tobacco data from the Behavior Risk Factor Surveillance System. It uses small area estimation techniques to model tobacco consumption at the county level."
   },
   {
     "objectID": "research.html#working-papers",
     "href": "research.html#working-papers",
-    "title": "research",
+    "title": "Research",
     "section": "",
-    "text": "Paper Title Here with A. Coauthor — under review\n[PDF] [Code]\nTester sentence\nData-generating process. Where these data came from, who produced them, and what was decided in producing them."
+    "text": "Small area estimation of tobacco consumption with microdata with Dr. Tiefelsdorf — under abstract review\n\nData-generating process. This project uses data from the US Census Bureau and tobacco data from the Behavior Risk Factor Surveillance System. It uses small area estimation techniques to model tobacco consumption at the county level."
   },
   {
     "objectID": "about.html",
@@ -23,21 +23,21 @@
   {
     "objectID": "teaching.html",
     "href": "teaching.html",
-    "title": "teaching",
+    "title": "Teaching",
     "section": "",
     "text": "GISC 7360: GIS Pattern Analysis Fall 2026  GISC 6301: GIS Data Analysis Fundamentals Fall 2026 EPPS6326 & GISC6323: Machine Learning and AI for Socio-Economic and Georeferenced Data Spring 2026 GISC 2307: Digital Earth Fall 2024"
   },
   {
     "objectID": "teaching.html#teaching-assistant",
     "href": "teaching.html#teaching-assistant",
-    "title": "teaching",
+    "title": "Teaching",
     "section": "",
     "text": "GISC 7360: GIS Pattern Analysis Fall 2026  GISC 6301: GIS Data Analysis Fundamentals Fall 2026 EPPS6326 & GISC6323: Machine Learning and AI for Socio-Economic and Georeferenced Data Spring 2026 GISC 2307: Digital Earth Fall 2024"
   },
   {
     "objectID": "teaching.html#teaching-associate",
     "href": "teaching.html#teaching-associate",
-    "title": "teaching",
+    "title": "Teaching",
     "section": "Teaching Associate",
     "text": "Teaching Associate\nGISC 2307: Digital Earth Fall 2025 Spring 2025"
   },
@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "Brennan Stout",
     "section": "",
-    "text": "I am a PhD student in Geospatial Information Sciences at the University of Texas at Dallas. My research examines … ## Research Interests - Small Area Estimation - Epidemiology - Bayesian modeling\nAbout Research Teaching CV Blog"
+    "text": "I am a PhD student in Geospatial Information Sciences at the University of Texas at Dallas. My research focus on the areas of demographic and spatial modeling.\nResearch Interests:\n\nSmall Area Estimation\nEpidemiology\nBayesian modeling\n\nAbout Research Teaching CV Blog"
   },
   {
     "objectID": "epps6302.html",
