@@ -3,16 +3,10 @@
     "listing": "/blog.html",
     "items": [
       "/about.html",
-      "/assignment2.html",
-      "/assignment3.html",
-      "/assignment4_wPlot_final.html",
-      "/assignment5.html",
-      "/assignment6.html",
-      "/assignment7.html",
-      "/Assignment8.html",
-      "/assignment8_act.html",
+      "/cv.html",
       "/index.html",
-      "/assignment1.html"
+      "/research.html",
+      "/teaching.html"
     ]
   }
 ]
