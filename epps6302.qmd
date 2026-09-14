@@ -1,5 +1,36 @@
 ---
-title: "Epps 6302"
+title: "EPPS 6302"
 ---
 
+
+:::::::::::: grid
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 2](assignment2_6302.qmd) {.card-title}
+
+Google Trends: two ways to get the same data
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 3 Placeholder](assignment2_6302.qmd) {.card-title}
+
 Placeholder
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 4 Placeholder](assignment2_6301.qmd) {.card-title}
+
+Placeholder
+:::
+::::
+:::::
+::::::::::::
