@@ -1,0 +1,131 @@
+---
+title: "Assignment 3"
+author: Brennan Stout
+date: today
+---
+
+## Methods note
+
+The goal of this was to examine rural urban splits at the county level. Geography: County (State: California) Variables:
+
+- Renter occupied housing units
+
+- Number of households
+
+- Number of enrolled students
+
+A rent rate is calculated as the percentage of households renting. (renter occupied) / (total households) Assumptions: Large percent of renters and a larger number of students in urban counties, showing a younger and more transient population. The margin of error show the uncertainty around the values being mapped. This and the related uncertainty intervals can show if counties are statically different in their rent rates (or not significant if there is an overlap) Interpretation: The map demonstrates the number of students is higher in those urban counties, this is more a reflection of the population density but can also be viewed as the population is younger. Most of the top 10 in rent percent also are major urban counties. (Namely, San Francisco County & Los Angeles)
+
+```{r}
+#| include: true
+#| echo: false
+# Packages
+library(tidycensus)
+library(tigris)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(scales)
+options(tigris_use_cache = TRUE)
+
+
+# 2) Explore variables (no `cache` argument — deprecated and ignored)
+vars <- load_variables(2024, "acs5")
+#vars |> dplyr::filter(grepl("^B19", name)) |> dplyr::slice_head(n = 10)
+
+
+# 3) Parameters 
+state_abbr <- "CA"
+geo_level <- "county" # options: state, county, tract, block group
+
+my_vars <- c(rent =  "B25003_003", # renter occupied housing unit
+             stu_num = "B14001_002", # enrolled in school
+             hh = "B11012_001" # total of households
+)
+year_acs <- 2024
+survey <- "acs5"
+
+# 4) Download, wide — one row per area, and the sf class survives
+acs_wide <- get_acs(
+  geography = geo_level,
+  variables = my_vars,
+  state = state_abbr,
+  year = year_acs,
+  survey = survey,
+  geometry = TRUE,
+  output = "wide"
+)
+
+##
+# 5) Derive a rate, and carry its margin of error through
+acs_wide <- acs_wide |>
+  mutate(rent_rate = rentE / hhE, #need rate by household
+         rent_moe = moe_prop(rentE, hhE, rentM, hhM))
+
+
+```
+
+```{r map}
+
+# 6) Ma
+ggplot(acs_wide) + 
+  geom_sf(aes(fill = (stu_numE)), color = NA) +
+  scale_fill_viridis_c(name = "# of Students", option = "turbo") +
+  labs(title = paste0("ACS ", year_acs, " Number of Enrolled Students — ",
+                      state_abbr, " (", geo_level, ")"),
+       caption = "Source: U.S. Census Bureau via tidycensus") +
+  theme_minimal() +
+  theme(text = element_text(family = "serif"), # drop if not installed
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.caption = element_text(size = 8),
+        legend.position = "inside",
+        legend.position.inside = c(1, 0.7))
+
+```
+
+```{r tables}
+top10 <- acs_wide |>
+  st_drop_geometry() |>
+  arrange(desc(rent_rate)) |>
+  select(NAME, rent_rate, rent_moe, rentE, rentM) |>
+  slice_head(n = 10)
+bottom10 <- acs_wide |>
+  st_drop_geometry() |>
+  arrange(rent_rate) |>
+  select(NAME, rent_rate, rent_moe, rentE, rentM) |>
+  slice_head(n = 10)
+
+top10
+bottom10
+```
+
+print(paste0("County name: ", sac\$NAME, ", Rent Percentage: ", round(sac\$rent_rate\*100,2), "%, MoE: ", round(sac\$rent_moe\*100,2),"%, Lower Bound: ", round(sac\$rent_lower\[\[1\]\]\*100,2), "%, Upper Bound: ", round(sac\$rent_upper\[\[1\]\]\*100,2),"%"))
+
+print(paste0("County name: ", tul\$NAME, ", Rent Percentage: ", round(tul\$rent_rate\*100,2), "%, MoE: ", round(tul\$rent_moe\*100,2),"%, Lower Bound: ", round(tul\$rent_lower\[\[1\]\]\*100,2), "%, Upper Bound: ", round(tul\$rent_upper\[\[1\]\]\*100,2),"%"))
+
+```{r overlap}
+
+upper <- list()
+lower <- list()
+
+for (n in 1:length(acs_wide$rent_moe)) {
+  moe <- acs_wide$rent_moe[n]
+  pe <- acs_wide$rent_rate[n]
+  lower[[length(lower) + 1]] <- pe - moe
+  upper[[length(upper) + 1]] <- pe + moe
+}
+
+acs_wide$rent_upper <- upper
+acs_wide$rent_lower <- lower
+
+sac <- acs_wide[4,]
+tul <-  acs_wide[5,]
+
+print(paste0("County name: ", sac$NAME, ", Rent Percentage: ", round(sac$rent_rate*100,2), "%, MoE: ", round(sac$rent_moe*100,2),"%, Lower Bound: ", round(sac$rent_lower[[1]]*100,2), "%, Upper Bound: ", round(sac$rent_upper[[1]]*100,2),"%"))
+
+print(paste0("County name: ", tul$NAME, ", Rent Percentage: ", round(tul$rent_rate*100,2), "%, MoE: ", round(tul$rent_moe*100,2),"%, Lower Bound: ", round(tul$rent_lower[[1]]*100,2), "%, Upper Bound: ", round(tul$rent_upper[[1]]*100,2),"%"))
+
+```
+
+Both counties are proximal counties to larger urban centers, though Tulare is about a third the size of Sacramento County. With the overlap in the confidence intervals, they are not significantly different in their percentages of households who rent.
