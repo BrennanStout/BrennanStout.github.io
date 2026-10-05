@@ -17,9 +17,9 @@ Google Trends: two ways to get the same data
 ::::: {.g-col-12 .g-col-md-4}
 :::: {.card .h-100}
 ::: card-body
-### [Assignment 3 Placeholder](assignment2_6302.qmd) {.card-title}
+### [Assignment 3 ACS API](assignment3_6302.qmd) {.card-title}
 
-Placeholder
+Census API application
 :::
 ::::
 :::::
@@ -27,9 +27,9 @@ Placeholder
 ::::: {.g-col-12 .g-col-md-4}
 :::: {.card .h-100}
 ::: card-body
-### [Assignment 4 Placeholder](assignment2_6301.qmd) {.card-title}
+### [Assignment 4 Scraping](assignment4_6302.qmd) {.card-title}
 
-Placeholder
+Applications of web scraping against APIs
 :::
 ::::
 :::::

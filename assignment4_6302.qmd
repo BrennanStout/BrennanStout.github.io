@@ -1,0 +1,137 @@
+---
+title: "Assignment 4"
+author: Brennan Stout
+date: today
+---
+
+## Web scraping and APIs
+
+```{r}
+# install.packages(c("rvest", "dplyr", "tidyr", "stringr",
+#                    "readr", "polite", "janitor", "WDI"))
+# install.packages("robotstxt")
+
+library(rvest)
+library(dplyr)
+library(stringr)
+library(readr)
+```
+
+
+
+```{r}
+## ---- 0. Ask permission first ----------------------------------------------
+## Always before the first request. robotstxt::paths_allowed() returns TRUE or
+## FALSE for the exact path you intend to fetch.
+
+robotstxt::paths_allowed("https://en.wikipedia.org/wiki/List_of_countries_by_foreign-exchange_reserves")
+```
+
+```{r}
+## ---- 1. The sandbox: books.toscrape.com ------------------------------------
+## Built and published for scraping practice. 1,000 books, 50 pages, no
+## JavaScript. Learn the verbs here before you point them at anyone's server.
+
+books_pg <- read_html("https://books.toscrape.com/catalogue/page-1.html")
+
+books <- tibble(
+  title  = books_pg |> html_elements("article.product_pod h3 a") |> html_attr("title"),
+  price  = books_pg |> html_elements("article.product_pod p.price_color") |> html_text2(),
+  rating = books_pg |> html_elements("article.product_pod p.star-rating") |>
+    html_attr("class") |> str_remove("star-rating ")
+) |>
+  mutate(price_gbp = parse_number(price))
+
+head(books)
+```
+
+
+```{r}
+library(knitr)
+library(kableExtra)
+## ---- 2. The Wikipedia table -----------------------------------------------
+## html_table() does the parsing. The work is everything after it.
+
+wiki_url <- paste0("https://en.wikipedia.org/wiki/",
+                   "List_of_countries_by_foreign-exchange_reserves")
+
+wiki_pg <- read_html(wiki_url)
+
+## Never assume the table you want is [[1]]. Look first.
+tabs <- wiki_pg |> html_elements("table.wikitable")
+length(tabs)                      # how many candidates?
+tabs |> html_table() |> lapply(\(x) dim(x))
+
+reserves_raw <- tabs[[1]] |> html_table()
+glimpse(reserves_raw)
+
+## Clean-up. Wikipedia tables arrive with footnote markers, thin spaces,
+## multi-row headers and a stray total row. Expect to redo this when the
+## article is edited — which is the point of the exercise.
+new_names <- c('a_1', 'a_2', 'a_3', 'a_4', 'a_5', 'a_6', 'a_7', 'a_8')
+names(reserves_raw) <- make.unique(dput(names(reserves_raw)))
+reserves_raw %>% 
+  rename_with(~new_names)
+
+reserves <- reserves_raw %>%
+  slice(-(1:2)) %>%
+  setNames(c(
+    "country",
+    "continent",
+    "reserves_inc_gold_usd_m",
+    "reserves_inc_gold_change",
+    "reserves_exc_gold_usd_m",
+    "reserves_exc_gold_change",
+    "last_reported_date",
+    "reference"
+  )) %>%
+  mutate(
+    across(
+      c(reserves_inc_gold_usd_m, reserves_inc_gold_change,
+        reserves_exc_gold_usd_m, reserves_exc_gold_change),
+      readr::parse_number
+    ),
+    reference = readr::parse_number(reference)
+  ) %>%
+   as.data.frame()
+
+reserves %>%
+  kable(
+    format = "html",
+    col.names = c("Country", "Continent", "Reserves ($M)", "Change", "Reserves ($M)", "Change", "Date", "Ref"),
+    format.args = list(big.mark = ",")
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  add_header_above(c(" " = 2, "Including Gold" = 2, "Excluding Gold" = 2, " " = 2))
+```
+
+
+```{r}
+## ---- 3. The same quantity, from an API -------------------------------------
+## Foreign reserves are published by the World Bank as FI.RES.TOTL.CD,
+## "Total reserves (includes gold, current US$)". One call, versioned,
+## documented, and identical for whoever runs it.
+
+library(WDI)
+reserves_api <- WDI(indicator = "FI.RES.TOTL.CD",
+                    start = 2015, end = 2024, extra = TRUE)
+head(reserves_api)
+```
+
+```{r}
+## ---- 4. Cache what you pulled ----------------------------------------------
+write_csv(reserves, paste0("reserves_wiki_", Sys.Date(), ".csv"))
+```
+---- 5. The question this script exists to raise ---------------------------
+Compare 2 and 3. Same concept, two data-generating processes:
+  - Wikipedia: edited by volunteers, sourced from many places, no schema,
+    no versioning, no uncertainty, changes without notice
+  - World Bank: one compiler, documented methodology, stable indicator code
+Scraping was the wrong tool here. Knowing when it is the *only* tool is the
+skill this course is actually teaching.
+
+The time stamps on the World Bank data is probably the most imporant part of understanding the scraping, this gives a point of reference to check the data against. While Wikipedia is a decent source, to get those same timestamp if would likely require scraping (or using the api) of each bank being referenced in the table. As is stated, scraping is best when it is the only tool available. APIs or other data access points get around all of those messy data issues which come from even the most successful scraping attempts.
+
+
+*AI note*
+Gemini was used for dealing with the tibble and visualizations.
