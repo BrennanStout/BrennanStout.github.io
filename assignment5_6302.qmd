@@ -1,0 +1,87 @@
+---
+title: "Assignment 5"
+author: "Brennan Stout"
+date: today
+---
+
+```{r}
+library(httr2)
+
+api_key <- Sys.getenv("GOVINFO_API_KEY")
+
+body <- list(
+  query = 'collection:(CHRG) AND "Committee on Foreign Relations"',
+  pageSize = 10,
+  offsetMark = "*",
+  sorts = list(list(field = "publishdate", sortOrder = "DESC"))
+)
+
+found <- request("https://api.govinfo.gov/search") |>
+  req_url_query(api_key = api_key) |>
+  req_body_json(body) |>
+  req_perform() |>
+  resp_body_json()
+
+save_dir <- "C:\\Users\\brist\\Documents\\WebOut_Stout\\govInfo"
+
+records <- head(found$results, 10)
+
+download_log <- lapply(records, function(item) {
+  pkg_id <- item$packageId
+  pdf_url <- if (!is.null(item$download$pdfLink)) {
+    item$download$pdfLink
+  } else {
+    paste0("https://api.govinfo.gov/packages/", pkg_id, "/pdf")
+  }
+  
+  file_name <- paste0(pkg_id, ".pdf")
+  dest_path <- file.path(save_dir, file_name)
+  download_status <- tryCatch({
+    request(pdf_url) |>
+      req_url_query(api_key = api_key) |>
+      req_perform(path = dest_path)
+    "Success"
+  }, error = function(e) {
+    conditionMessage(e)
+  })
+  
+  data.frame(
+    title        = if (!is.null(item$title)) item$title else NA_character_,
+    package_id   = pkg_id,
+    date_issued  = if (!is.null(item$dateIssued)) item$dateIssued else NA_character_,
+    file_name    = file_name,
+    file_path    = dest_path,
+    size_mb      = if (file.exists(dest_path)) round(file.size(dest_path) / (1024^2), 2) else NA_real_,
+    status       = download_status,
+    stringsAsFactors = FALSE
+  )
+})
+
+download_table <- do.call(rbind, download_log)
+print(download_table)
+
+```
+```{r}
+file_path <- "govinfo-search-results-2026-10-12T21_12_40.csv"
+
+raw_data <- read.csv(file_path, stringsAsFactors = FALSE, fill = TRUE)
+clean_data <- raw_data[!is.na(raw_data$publishdate) & raw_data$publishdate != "", ]
+
+clean_data$publishdate <- as.Date(clean_data$publishdate)
+sorted_data <- clean_data[order(clean_data$publishdate, decreasing = TRUE), ]
+
+top10 <- head(sorted_data[, c("index", "publishdate", "collection", "packageId", "title")], 10)
+
+print(top10, row.names = FALSE)
+```
+The manual download and the API query get different results, likely due to different keywords being entered in the website.
+
+### Report
+
+Gov Info provide very good information, being that they are digital documents and not photo scans or otherwise physical to digital documents. It would take a little work through quanteda or some other semantic tool to process all the documents. A good way to improve the process in question could be in processing a combination of the title and governmentAuthor to better specify what documents are being searched for. This could also be done with the small description included with the document that as well, but would need more implementation of a semantic search tool.
+
+The advantage of an API over a search page or scraping is the level of control if offers. The data searched by the API will be structured and sorted intentionally for quick, accurate, and repeatable access.
+
+
+
+

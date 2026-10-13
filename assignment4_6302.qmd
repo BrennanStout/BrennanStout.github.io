@@ -7,9 +7,6 @@ date: today
 ## Web scraping and APIs
 
 ```{r}
-# install.packages(c("rvest", "dplyr", "tidyr", "stringr",
-#                    "readr", "polite", "janitor", "WDI"))
-# install.packages("robotstxt")
 
 library(rvest)
 library(dplyr)

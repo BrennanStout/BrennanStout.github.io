@@ -33,4 +33,14 @@ Applications of web scraping against APIs
 :::
 ::::
 :::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 5 API](assignment5_6302.qmd) {.card-title}
+
+Applications of GovInfo API
+:::
+::::
+:::::
 ::::::::::::
