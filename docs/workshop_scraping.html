@@ -445,9 +445,11 @@ No encoding supplied: defaulting to UTF-8.</code></pre>
 <pre><code>[1] 35.07035</code></pre>
 </div>
 </div>
+<p>books.toscrape Data collected: text permission: terms Method: selector Cleaning rules: NA Known gaps: NA</p>
 <section id="checkpoint-a." class="level3">
 <h3 class="anchored" data-anchor-id="checkpoint-a.">Checkpoint A.</h3>
-<p>nrow(books) is 100; price and rating are numeric; no NA in title. Then answer in one sentence each: what is the mean price by rating? Which line breaks first if the site is redesigned?</p>
+<p>What is the mean price by rating? The mean price of the books is £34.56</p>
+<p>Which line breaks first if the site is redesigned? The parse books function will break as it needs the html tags to remain consistent.</p>
 </section>
 </section>
 <section id="part-2" class="level2">
@@ -465,7 +467,7 @@ No encoding supplied: defaulting to UTF-8.</code></pre>
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
-<p>Where are the quotes in the source?</p>
+<p>Where are the quotes in the source? The quotes are located under the quote element under the page.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -496,7 +498,11 @@ No encoding supplied: defaulting to UTF-8.</code></pre>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>   \(x) <span class="fu">paste</span>(<span class="fu">unlist</span>(x), <span class="at">collapse =</span> <span class="st">"; "</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(text, author_name, author_slug, tags)</span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rectangle</span>(j<span class="sc">$</span>quotes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Sys.time</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2026-10-13 16:38:44 CDT"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rectangle</span>(j<span class="sc">$</span>quotes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    text                                            author_name author_slug tags 
@@ -512,20 +518,32 @@ No encoding supplied: defaulting to UTF-8.</code></pre>
  9 “A woman is like a tea bag; you never know how… Eleanor Ro… Eleanor-Ro… misa…
 10 “A day without sunshine is like, you know, nig… Steve Mart… Steve-Mart… humo…</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Sys.time</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2026-10-13 16:38:44 CDT"</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> <span class="fu">list</span>(); p <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>pages[[p]] <span class="ot">&lt;-</span> <span class="fu">get_quotes</span>(p)</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>pages[[p]]<span class="sc">$</span>has_next) <span class="cf">break</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>quotes <span class="ot">&lt;-</span> <span class="fu">map</span>(pages, <span class="st">"quotes"</span>) <span class="sc">|&gt;</span> <span class="fu">list_flatten</span>() <span class="sc">|&gt;</span> <span class="fu">rectangle</span>()</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(quotes, <span class="st">"data/quotes.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> <span class="fu">list</span>(); p <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Sys.time</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2026-10-13 16:38:45 CDT"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>pages[[p]] <span class="ot">&lt;-</span> <span class="fu">get_quotes</span>(p)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>pages[[p]]<span class="sc">$</span>has_next) <span class="cf">break</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>quotes <span class="ot">&lt;-</span> <span class="fu">map</span>(pages, <span class="st">"quotes"</span>) <span class="sc">|&gt;</span> <span class="fu">list_flatten</span>() <span class="sc">|&gt;</span> <span class="fu">rectangle</span>()</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Sys.time</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2026-10-13 16:38:56 CDT"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(quotes, <span class="st">"data/quotes.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>live <span class="ot">&lt;-</span> <span class="fu">read_html_live</span>(<span class="st">"https://quotes.toscrape.com/js/"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>live <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".quote .text"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>() <span class="co"># ten quotes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>live <span class="ot">&lt;-</span> <span class="fu">read_html_live</span>(<span class="st">"https://quotes.toscrape.com/js/"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>live <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".quote .text"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>() <span class="co"># ten quotes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”"                
  [2] "“It is our choices, Harry, that show what we truly are, far more than our abilities.”"                                              
@@ -538,42 +556,48 @@ No encoding supplied: defaulting to UTF-8.</code></pre>
  [9] "“A woman is like a tea bag; you never know how strong it is until it's in hot water.”"                                              
 [10] "“A day without sunshine is like, you know, night.”"                                                                                 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>live<span class="sc">$</span><span class="fu">view</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>live<span class="sc">$</span><span class="fu">view</span>() </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(quotes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100</code></pre>
 </div>
+</div>
+<p>quotes.toscrape Data collected: text permission: terms Method: selector Cleaning rules: NA Known gaps: NA</p>
 <section id="checkpoint-b." class="level3">
 <h3 class="anchored" data-anchor-id="checkpoint-b.">Checkpoint B.</h3>
 <p>nrow(quotes) is 100 from 10 pages. Routes 1 and 2 return the same text for page 1 — which was faster, and which made fewer demands on the server? Which would survive a redesign of the page?</p>
+<p>The first routes is much faster and will have made less demands as it does not need to look at the website in a loop. The second option appears to have more resilient to the website changes as it just reads the quotes and text and does not need to unpack the text on the website.</p>
 </section>
 </section>
 <section id="part-3" class="level2">
 <h2 class="anchored" data-anchor-id="part-3">Part 3:</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://www.googleapis.com/youtube/v3/videos"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">req_url_query</span>(<span class="at">part =</span> <span class="st">"snippet,statistics"</span>, <span class="at">chart =</span> <span class="st">"mostPopular"</span>,</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="at">regionCode =</span> <span class="st">"US"</span>, <span class="at">maxResults =</span> <span class="dv">10</span>,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"YOUTUBE_API_KEY"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">req_perform</span>() <span class="sc">|&gt;</span> <span class="fu">resp_body_json</span>()</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">v =</span> yt<span class="sc">$</span>items) <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(v) <span class="sc">|&gt;</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hoist</span>(snippet, <span class="at">title =</span> <span class="st">"title"</span>, <span class="at">channel =</span> <span class="st">"channelTitle"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hoist</span>(statistics, <span class="at">views =</span> <span class="st">"viewCount"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(id, title, channel, views)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://www.googleapis.com/youtube/v3/videos"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">req_url_query</span>(<span class="at">part =</span> <span class="st">"snippet,statistics"</span>, <span class="at">chart =</span> <span class="st">"mostPopular"</span>,</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="at">regionCode =</span> <span class="st">"US"</span>, <span class="at">maxResults =</span> <span class="dv">10</span>,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"YOUTUBE_API_KEY"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">req_perform</span>() <span class="sc">|&gt;</span> <span class="fu">resp_body_json</span>()</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">v =</span> yt<span class="sc">$</span>items) <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(v) <span class="sc">|&gt;</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hoist</span>(snippet, <span class="at">title =</span> <span class="st">"title"</span>, <span class="at">channel =</span> <span class="st">"channelTitle"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hoist</span>(statistics, <span class="at">views =</span> <span class="st">"viewCount"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(id, title, channel, views)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    id          title                                               channel views
    &lt;chr&gt;       &lt;chr&gt;                                               &lt;chr&gt;   &lt;chr&gt;
- 1 bLECYvOdQPQ "Riley Green, Peyton Manning - Alabama Vs. Tenness… "Riley… 2756…
- 2 ox8lEnsxDag "River | Official Trailer"                          "Unive… 2484…
- 3 -2F6T9LiESs "I’ve Never Been This Scared In Minecraft…"         "CaseO… 8418…
- 4 C58utn68Qho "Saii Kay - Iau Tar Les (ft. Heff Lourie, Maix Kay… "Saii … 43159
- 5 KXO21xZdUaM "Hexed | Official Trailer"                          "Walt … 2921…
- 6 IojD4uQCCvo "\U0001f534LIVE | ARC RAIDERS DUOS w/ GIMMICK | NE… "TheBu… 1056…
- 7 2ZTcvsdMR1c "Ayra Starr - Heaven Baby ft. ZAYN"                 "AyraS… 9434…
- 8 fXz5DcshZ4g "Hood Warfare 2 Official Trailer"                   "Traps… 2024…
- 9 q0DFDWSNzT4 "The Most Controversial Game of 2026"               "Asmon… 8960…
-10 8aKR2Ho--5k "MEOVV(미야오) - ‘GO HARD’ M/V"                     "THEBL… 8074…</code></pre>
+ 1 bLECYvOdQPQ "Riley Green, Peyton Manning - Alabama Vs. Tenness… "Riley… 2951…
+ 2 ox8lEnsxDag "River | Official Trailer"                          "Unive… 2620…
+ 3 -2F6T9LiESs "I’ve Never Been This Scared In Minecraft…"         "CaseO… 8881…
+ 4 C58utn68Qho "Saii Kay - Iau Tar Les (ft. Heff Lourie, Maix Kay… "Saii … 43369
+ 5 KXO21xZdUaM "Hexed | Official Trailer"                          "Walt … 2943…
+ 6 IojD4uQCCvo "\U0001f534LIVE | ARC RAIDERS DUOS w/ GIMMICK | NE… "TheBu… 1069…
+ 7 2ZTcvsdMR1c "Ayra Starr - Heaven Baby ft. ZAYN"                 "AyraS… 9514…
+ 8 fXz5DcshZ4g "Hood Warfare 2 Official Trailer"                   "Traps… 2177…
+ 9 q0DFDWSNzT4 "The Most Controversial Game of 2026"               "Asmon… 9937…
+10 8aKR2Ho--5k "MEOVV(미야오) - ‘GO HARD’ M/V"                     "THEBL… 8112…</code></pre>
 </div>
 </div>
-<p>Five lines under your code, for each dataset: source and date collected; permission (robots.txt, terms, or a key); method (selector, endpoint or browser); cleaning rules applied; known gaps. This is the start of the datasheet your project proposal needs.</p>
+<p>YouTube Data collected: url, title, channel, and viewcount permission: api Method: selector Cleaning rules: Max 10 of US Known gaps: NA</p>
 
 
 </section>
