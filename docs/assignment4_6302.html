@@ -2,22 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Brennan Stout">
-<meta name="dcterms.date" content="2026-10-05">
+<meta name="dcterms.date" content="2026-10-13">
 
 <title>Assignment 4 – Brennan Stout</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-297427e7d36978dcf3e8becedaf899f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-6c222ecbed18e714a065c1e65f30f2f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -215,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 5, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -230,11 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="web-scraping-and-apis" class="level2">
 <h2 class="anchored" data-anchor-id="web-scraping-and-apis">Web scraping and APIs</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("rvest", "dplyr", "tidyr", "stringr",</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                    "readr", "polite", "janitor", "WDI"))</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("robotstxt")</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'rvest' was built under R version 4.5.3</code></pre>
 </div>
@@ -388,8 +387,8 @@ $ Ref.                               &lt;chr&gt; "Ref.", "Ref.", "[3]", "[4]", "
  3 China                            Asia     3,85… 4,299 3,50… 115,… 1 Au… [3]  
  4 Japan                            Asia     1,28… 18,4… 1,25… 16,2… 30 J… [4]  
  5 Switzerland                      Europe   939,… 13,9… 932,… 24,4… 30 J… [5]  
- 6 India                            Asia     785,… 45,2… 671,… 56,7… 04 S… [6]  
- 7 Russia                           Europe/… 761,… 5,600 434,… 1,517 21 A… [7]  
+ 6 Russia                           Europe/… 761,… 5,600 434,… 1,517 21 A… [6]  
+ 7 India                            Asia     734,… 12,9… 628,… 56,7… 9 Oc… [7]  
  8 Taiwan                           Asia     597,… 7,920 544,… 1,071 30 J… [8]  
  9 Saudi Arabia                     Asia     487,… 60,3… 494,… 60,3… 31 M… [9]  
 10 Hong Kong *                      Asia     445,… 20,7… 441,… 25,5… 30 J… [10] 
@@ -506,16 +505,6 @@ Excluding Gold
 <td style="text-align: right;">5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">India</td>
-<td style="text-align: left;">Asia</td>
-<td style="text-align: right;">785,710</td>
-<td style="text-align: right;">45,290.000</td>
-<td style="text-align: right;">671,900</td>
-<td style="text-align: right;">56,790</td>
-<td style="text-align: left;">04 September 2026</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Russia</td>
 <td style="text-align: left;">Europe/Asia</td>
 <td style="text-align: right;">761,200</td>
@@ -523,6 +512,16 @@ Excluding Gold
 <td style="text-align: right;">434,487</td>
 <td style="text-align: right;">1,517</td>
 <td style="text-align: left;">21 August 2026</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">India</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: right;">734,606</td>
+<td style="text-align: right;">12,952.000</td>
+<td style="text-align: right;">628,900</td>
+<td style="text-align: right;">56,790</td>
+<td style="text-align: left;">9 October 2026</td>
 <td style="text-align: right;">7</td>
 </tr>
 <tr class="even">
@@ -2454,12 +2453,12 @@ Excluding Gold
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reserves_api)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      country iso2c iso3c year FI.RES.TOTL.CD status lastupdated
-1 Afghanistan    AF   AFG 2024             NA         2026-07-13
-2 Afghanistan    AF   AFG 2023             NA         2026-07-13
-3 Afghanistan    AF   AFG 2022             NA         2026-07-13
-4 Afghanistan    AF   AFG 2021             NA         2026-07-13
-5 Afghanistan    AF   AFG 2020     9748946327         2026-07-13
-6 Afghanistan    AF   AFG 2019     8497655795         2026-07-13
+1 Afghanistan    AF   AFG 2024             NA         2026-10-08
+2 Afghanistan    AF   AFG 2023             NA         2026-10-08
+3 Afghanistan    AF   AFG 2022             NA         2026-10-08
+4 Afghanistan    AF   AFG 2021             NA         2026-10-08
+5 Afghanistan    AF   AFG 2020     9748946327         2026-10-08
+6 Afghanistan    AF   AFG 2019     8497655795         2026-10-08
                                              region capital longitude latitude
 1 Middle East, North Africa, Afghanistan &amp; Pakistan   Kabul   69.1761  34.5228
 2 Middle East, North Africa, Afghanistan &amp; Pakistan   Kabul   69.1761  34.5228
