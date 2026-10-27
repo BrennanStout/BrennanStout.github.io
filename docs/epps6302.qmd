@@ -1,0 +1,66 @@
+---
+title: "EPPS 6302"
+---
+
+
+:::::::::::: grid
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 2](assignment2_6302.qmd) {.card-title}
+
+Google Trends: two ways to get the same data
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 3 ACS API](assignment3_6302.qmd) {.card-title}
+
+Census API application
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 4 Scraping](assignment4_6302.qmd) {.card-title}
+
+Applications of web scraping against APIs
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 5 API](assignment5_6302.qmd) {.card-title}
+
+Applications of GovInfo API
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Webscraping Workshop](workshop_scraping.qmd) {.card-title}
+
+Workshop on scraping of YouTube and books/quotes to scrape
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 6 Quanteda](assignment6_6302.qmd) {.card-title}
+
+Assignment on Quanteda and text analytics
+:::
+::::
+:::::
+::::::::::::
