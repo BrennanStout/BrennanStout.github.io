@@ -1,0 +1,482 @@
+---
+title: "Assignment 6"
+author: "Brennan Stout"
+date: last-modified
+---
+
+## Report
+
+###Tweets:
+##Background:
+This summit was a notable meeting between the Chinese and US leaders to try and defuse some of the tensions which had been building during that time. It resulted in generally a favorable aspect between the two leaders.
+In the comparisons of the tweets which came out about that time, it is not overly surprising that the Xi administration linked to terms related to China more and the US administration linked to terms related to the US. The interesting part comes from the comparison of the use terms which came out of the summit, even as the tweets tend to be a rather limited view of the situation and biased to a given topic as the tweets gathered were all in English. From the documents it can be seen that both sides were using generally positive terms in regards to the situation, like relationship compromise and deepening. However, amusingly China referred to itself more than anything other while the US had nations as their most used term.
+
+###Quantitative Text Analysis
+In the comparison of the presidential inaugural addresses, this is being done on length, word diversity, and readability. Additionally, these addresses can be understood on the cosine similarity and keyness by party. In terms of length, which can be can be understood in the number of tokens needed to process the address. However, despite the want of politicians to talk the number of tokens has not changed overly much across all the addresses. The one which has changed greatly is that of the word choice and complexity. As the decades have moved, and the understanding of who the address is aimed at has changed there is a notable drop in the complexity of the language being used measured in US grade level. Even despite this, there are still a lot of consistent words which will continue to be used between addresses and even addresses of a similar era will remain generally consistent. For example, topics like jobs or drugs will be usually relegated to more modern speakers, but terms like government or people are very often present with good reason. These are notable and well crafted address which are meant to be a summation of nation concerns and the beginning of some era of change, but these sorts of consistencies between addresses point to an amusing level of irony behind that particular concept.
+
+
+### Data Note: CPD collection
+source: GovInfo
+Permission: Agreement 
+Query: API
+Selection: 2021-01-20 forward
+gaps: Only goverment documents
+
+## Tweet and API comparison
+
+GovInfo Compilation of Presidential Documents (CPD) & Xi-Biden Summit Tweets
+Description:
+1. Collect every document from the Compilation of Presidential Documents (CPD)
+    collection mentioning "Xi Jinping" since 20 January 2021 via the GovInfo Search API.
+2. Analyzes the November 2021 Biden-Xi virtual summit tweets dataset using quanteda:
+    - Keywords-in-Context (kwic()) around President Xi and summit discussions.
+    - Differential keyness (textstat_keyness()) comparing rhetorical framing
+      between the Biden and Xi administrations.
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(httr2)
+  library(jsonlite)
+  library(readr)
+  library(dplyr)
+  library(stringr)
+  library(quanteda)
+  library(quanteda.textstats)
+  library(quanteda.textplots)
+  library(ggplot2)
+})
+
+api_key <- Sys.getenv("GOVINFO_API_KEY")
+if (api_key == "") {
+  warning("GOVINFO_API_KEY environment variable not set. Falling back to DEMO_KEY (subject to strict rate limits).")
+  api_key <- "DEMO_KEY"
+}
+save_dir <- "govInfo_CPD_Xi"
+if (!dir.exists(save_dir)) {
+  dir.create(save_dir, recursive = TRUE)
+}
+
+search_query <- 'collection:(CPD) AND "Xi Jinping" AND publishdate:range(2021-01-20,)'
+all_records <- list()
+offset_mark <- "*"
+page_size   <- 100
+page_count  <- 1
+total_count <- NA
+
+repeat {
+  message(sprintf("--> Fetching page %d (offsetMark: %s)...", page_count, offset_mark))
+  
+  req_body <- list(
+    query      = search_query,
+    pageSize   = page_size,
+    offsetMark = offset_mark,
+    sorts      = list(list(field = "publishdate", sortOrder = "DESC"))
+  )
+  
+  resp <- tryCatch({
+    request("https://api.govinfo.gov/search") |>
+      req_url_query(api_key = api_key) |>
+      req_body_json(req_body) |>
+      req_perform() |>
+      resp_body_json()
+  }, error = function(e) {
+    message("Error during API request: ", conditionMessage(e))
+    NULL
+  })
+  
+  if (is.null(resp) || is.null(resp$results) || length(resp$results) == 0) {
+    message("No more records returned from API.")
+    break
+  }
+  
+  if (is.na(total_count) && !is.null(resp$count)) {
+    total_count <- resp$count
+    message(sprintf("Total matching CPD documents identified in GovInfo: %d", total_count))
+  }
+  
+  batch <- resp$results
+  all_records <- c(all_records, batch)
+  message(sprintf("    Retrieved %d records (running total: %d of %s)", 
+                  length(batch), length(all_records), ifelse(is.na(total_count), "?", as.character(total_count))))
+  next_offset <- resp$offsetMark
+  if (is.null(next_offset) || next_offset == offset_mark || 
+      (!is.na(total_count) && length(all_records) >= total_count)) {
+    message("Reached final page of search results.")
+    break
+  }
+  
+  offset_mark <- next_offset
+  page_count  <- page_count + 1
+  Sys.sleep(0.5) # politeness buffer
+}
+
+download_log <- lapply(seq_along(all_records), function(i) {
+  item <- all_records[[i]]
+  pkg_id <- item$packageId
+  
+  pdf_url <- if (!is.null(item$download$pdfLink)) {
+    item$download$pdfLink
+  } else {
+    paste0("https://api.govinfo.gov/packages/", pkg_id, "/pdf")
+  }
+  
+  file_name <- paste0(pkg_id, ".pdf")
+  dest_path <- file.path(save_dir, file_name)
+  if (file.exists(dest_path) && file.size(dest_path) > 0) {
+    status <- "Already Downloaded"
+  } else {
+    status <- tryCatch({
+      request(pdf_url) |>
+        req_url_query(api_key = api_key) |>
+        req_perform(path = dest_path)
+      "Success"
+    }, error = function(e) {
+      conditionMessage(e)
+    })
+    Sys.sleep(0.2)
+  }
+  
+  data.frame(
+    index        = i,
+    package_id   = pkg_id,
+    date_issued  = if (!is.null(item$dateIssued)) item$dateIssued else NA_character_,
+    title        = if (!is.null(item$title)) item$title else NA_character_,
+    collection   = if (!is.null(item$collectionCode)) item$collectionCode else "CPD",
+    pdf_url      = pdf_url,
+    file_path    = dest_path,
+    size_mb      = if (file.exists(dest_path)) round(file.size(dest_path) / (1024^2), 2) else NA_real_,
+    status       = status,
+    stringsAsFactors = FALSE
+  )
+})
+
+download_table <- do.call(rbind, download_log)
+
+metadata_file <- file.path(save_dir, "cpd_xi_jinping_collection_log.csv")
+write.csv(download_table, metadata_file, row.names = FALSE)
+
+print(head(download_table[, c("package_id", "date_issued", "title", "size_mb", "status")], 10), row.names = FALSE)
+
+### Pt2
+summit_url <- "https://raw.githubusercontent.com/datageneration/datamethods/master/textanalytics/summit_11162021.csv"
+summit <- read_csv(summit_url, show_col_types = FALSE)
+
+summit_clean <- summit %>%
+  filter(!is.na(text) & text != "") %>%
+  filter(is.na(lang) | lang == "en") %>%
+  distinct(text, .keep_all = TRUE)
+
+tweet_corpus <- corpus(summit_clean, text_field = "text")
+
+custom_stops <- c(
+  stopwords("english"),
+  "rt", "https", "t.co", "amp", "via", "re", "co", "http",
+  "u", "ur", "tweet", "twitter", "video", "photo", "status"
+)
+
+toks <- tokens(
+  tweet_corpus,
+  remove_punct   = TRUE,
+  remove_symbols = TRUE,
+  remove_numbers = TRUE,
+  remove_url     = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(custom_stops)
+
+
+xi_kwic <- kwic(toks, pattern = "xi", window = 5)
+cat(sprintf("Total occurrences of 'xi' in summit tweets: %d\n", nrow(xi_kwic)))
+print(head(as.data.frame(xi_kwic)[, c("pre", "keyword", "post")], 10), row.names = FALSE)
+
+xi_phrase_kwic <- kwic(toks, pattern = phrase("xi jinping"), window = 5)
+cat(sprintf("\nTotal occurrences of phrase 'xi jinping': %d\n", nrow(xi_phrase_kwic)))
+print(head(as.data.frame(xi_phrase_kwic)[, c("pre", "keyword", "post")], 10), row.names = FALSE)
+
+
+multi_kwic <- kwic(toks, pattern = c("xi", "biden", "summit", "taiwan"), window = 4)
+print(head(as.data.frame(multi_kwic)[, c("keyword", "pre", "post")], 12), row.names = FALSE)
+
+
+# g_dispersion <- textplot_xray(
+#   kwic(toks, pattern = "xi"),
+#   kwic(toks, pattern = "biden"),
+#   kwic(toks, pattern = "summit"),
+#   kwic(toks, pattern = "taiwan")
+# ) +
+#   theme_bw() +
+#   labs(title = "Lexical Dispersion of Summit Keywords Across Tweet Stream",
+#        x = "Token Position in Corpus", y = "Keyword")
+# print(g_dispersion)
+
+biden_regex <- "\\b(biden|joe|potus|whitehouse|washington|us|u\\.s|usa|america|american)\\b"
+xi_regex    <- "\\b(xi|jinping|china|chinese|beijing|ccp|prc)\\b"
+
+raw_texts <- tolower(as.character(tweet_corpus))
+has_biden <- str_detect(raw_texts, biden_regex)
+has_xi    <- str_detect(raw_texts, xi_regex)
+
+docvars(tweet_corpus, "admin_focus") <- case_when(
+  has_biden & !has_xi ~ "Biden_Admin",
+  !has_biden & has_xi ~ "Xi_Admin",
+  has_biden & has_xi  ~ "Bilateral",
+  TRUE                ~ "Other"
+)
+
+cat("Distribution of tweets by administration focus:\n")
+print(table(docvars(tweet_corpus, "admin_focus")))
+
+contrast_corpus <- corpus_subset(tweet_corpus, admin_focus %in% c("Biden_Admin", "Xi_Admin"))
+
+contrast_toks <- tokens(
+  contrast_corpus,
+  remove_punct   = TRUE,
+  remove_symbols = TRUE,
+  remove_numbers = TRUE,
+  remove_url     = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(custom_stops, "biden", "xi", "jinping", "president", "summit", "virtual")) 
+contrast_dfm <- dfm(contrast_toks) %>%
+  dfm_trim(min_termfreq = 3) %>%
+  dfm_group(groups = admin_focus)
+
+keyness_biden_vs_xi <- textstat_keyness(contrast_dfm, target = "Biden_Admin", measure = "chi2")
+
+cat("\nTop 15 distinctive features for the Biden Administration (positive chi2):\n")
+print(head(keyness_biden_vs_xi, 15), row.names = FALSE)
+
+cat("\nTop 15 distinctive features for the Xi Administration (negative chi2 / reference):\n")
+print(tail(keyness_biden_vs_xi, 15), row.names = FALSE)
+
+# Comparison plot
+keyness_plot <- textplot_keyness(
+  keyness_biden_vs_xi,
+  n = 20,
+  margin = 0.2,
+  color = c("dodgerblue3", "firebrick2")
+) +
+  theme_minimal() +
+  labs(
+    title = "Differential Keyness: Biden Administration vs. Xi Administration",
+    subtitle = "Analysis of Rhetorical Framing in Summit Tweets (target = Biden Admin; reference = Xi Admin)",
+    x = "Chi-squared Keyness Statistic"
+  )
+
+# Display plot
+print(keyness_plot)
+```
+
+## Quantitative Text Analysis of U.S. Presidential Inaugural Addresses
+Using quanteda: Length, Lexical Diversity, Readability, Cosine Similarity, Keyness by Party, and Wordfish Scaling (textmodel_wordfish)
+```{r}
+suppressPackageStartupMessages({
+  library(quanteda)
+  library(quanteda.textmodels)
+  library(tidyr)
+  library(tibble)
+})
+
+
+inaug_corpus <- data_corpus_inaugural
+
+summary_info <- summary(inaug_corpus, n = 5)
+print(summary_info)
+
+raw_toks <- tokens(inaug_corpus)
+
+clean_toks <- tokens(
+  inaug_corpus,
+  remove_punct   = TRUE,
+  remove_symbols = TRUE,
+  remove_numbers = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("english"))
+
+inaug_dfm <- dfm(clean_toks)
+
+metrics_df <- data.frame(
+  doc_id    = docnames(inaug_corpus),
+  Year      = docvars(inaug_corpus, "Year"),
+  President = docvars(inaug_corpus, "President"),
+  Party     = docvars(inaug_corpus, "Party"),
+  Length    = ntoken(inaug_corpus),
+  Types     = ntype(inaug_corpus),
+  stringsAsFactors = FALSE
+)
+
+cat("\nTop 5 Longest Inaugural Addresses:\n")
+print(head(metrics_df[order(-metrics_df$Length), c("Year", "President", "Length")], 5), row.names = FALSE)
+
+cat("\nTop 5 Shortest Inaugural Addresses:\n")
+print(head(metrics_df[order(metrics_df$Length), c("Year", "President", "Length")], 5), row.names = FALSE)
+
+p_length <- ggplot(metrics_df, aes(x = Year, y = Length, color = Party)) +
+  geom_point(size = 2.5, alpha = 0.8) +
+  geom_smooth(method = "loess", color = "darkgray", se = FALSE, linetype = "dashed") +
+  theme_minimal() +
+  labs(
+    title = "Length of U.S. Presidential Inaugural Addresses Over Time",
+    subtitle = "Word count measured by ntoken(); historical peak in 1841 (W.H. Harrison)",
+    x = "Year", y = "Token Count"
+  )
+print(p_length)
+
+lexdiv_res <- textstat_lexdiv(
+  inaug_dfm,
+  measure = c("TTR", "C", "R")
+)
+
+metrics_df$TTR  <- lexdiv_res$TTR
+metrics_df$Root_TTR <- lexdiv_res$R
+
+cat("\nSample Lexical Diversity (TTR) Scores:\n")
+print(head(metrics_df[, c("Year", "President", "Length", "TTR")], 6), row.names = FALSE)
+p_lexdiv <- ggplot(metrics_df, aes(x = Year, y = TTR)) +
+  geom_point(aes(color = Party), size = 2.5) +
+  geom_smooth(method = "loess", se = TRUE, color = "steelblue") +
+  theme_minimal() +
+  labs(
+    title = "Lexical Diversity (TTR) Across Inaugural Addresses",
+    subtitle = "Vocabulary repetition vs. richness across historical eras",
+    x = "Year", y = "Type-Token Ratio (TTR)"
+  )
+print(p_lexdiv)
+
+
+readability_res <- textstat_readability(
+  inaug_corpus,
+  measure = c("Flesch.Kincaid", "Flesch")
+)
+
+metrics_df$Flesch_Kincaid <- readability_res$Flesch.Kincaid
+metrics_df$Flesch_Ease    <- readability_res$Flesch
+
+cat("\nReadability by Era (Flesch-Kincaid Grade Level):\n")
+cat("Earliest 5 Speeches Mean Grade Level:", 
+    round(mean(head(metrics_df$Flesch_Kincaid, 5)), 1), "\n")
+cat("Latest 5 Speeches Mean Grade Level:", 
+    round(mean(tail(metrics_df$Flesch_Kincaid, 5)), 1), "\n")
+
+p_readability <- ggplot(metrics_df, aes(x = Year, y = Flesch_Kincaid)) +
+  geom_point(aes(color = Party), size = 2.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "firebrick") +
+  theme_minimal() +
+  labs(
+    title = "Historical Decline in Inaugural Address Reading Level",
+    subtitle = "Flesch-Kincaid Grade Level steadily dropped from collegiate/graduate to 8th-10th grade",
+    x = "Year", y = "Flesch-Kincaid Grade Level (U.S. School Grade)"
+  )
+print(p_readability)
+
+dfm_trimmed <- dfm_trim(inaug_dfm, min_termfreq = 5, min_docfreq = 3)
+
+cos_matrix <- as.matrix(textstat_simil(dfm_trimmed, method = "cosine"))
+
+n_docs <- nrow(cos_matrix)
+predecessor_sim <- numeric(n_docs)
+predecessor_sim[1] <- NA
+
+for (i in 2:n_docs) {
+  predecessor_sim[i] <- cos_matrix[i, i - 1]
+}
+metrics_df$Predecessor_Sim <- predecessor_sim
+
+p_sim <- ggplot(na.omit(metrics_df), aes(x = Year, y = Predecessor_Sim)) +
+  geom_line(color = "darkgray") +
+  geom_point(aes(color = Party), size = 2.5) +
+  theme_minimal() +
+  labs(
+    title = "Rhetorical Continuity with Immediate Predecessor",
+    subtitle = "Cosine similarity between consecutive inaugural addresses over time",
+    x = "Year", y = "Cosine Similarity"
+  )
+print(p_sim)
+
+postwar_corpus <- corpus_subset(inaug_corpus, Year >= 1945)
+postwar_dfm <- tokens(postwar_corpus, remove_punct = TRUE, remove_numbers = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("english")) %>%
+  dfm() %>%
+  dfm_group(groups = President)
+
+postwar_sim <- textstat_simil(postwar_dfm, method = "cosine")
+cat("\nCosine Similarity Matrix Among Post-WWII Presidents (Sample):\n")
+print(round(as.matrix(postwar_sim)[1:6, 1:6], 3))
+
+bipartisan_corpus <- corpus_subset(inaug_corpus, Party %in% c("Democratic", "Republican"))
+
+party_dfm <- tokens(bipartisan_corpus, remove_punct = TRUE, remove_numbers = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("english")) %>%
+  dfm() %>%
+  dfm_group(groups = Party)
+
+keyness_party <- textstat_keyness(party_dfm, target = "Democratic", measure = "chi2")
+
+cat("\nTop 10 Democratic Key Features (Positive Chi2):\n")
+print(head(keyness_party, 10), row.names = FALSE)
+
+cat("\nTop 10 Republican Key Features (Negative Chi2 / Reference Group):\n")
+print(tail(keyness_party, 10), row.names = FALSE)
+
+# Plot keyness
+p_keyness <- textplot_keyness(
+  keyness_party,
+  n = 15,
+  margin = 0.2,
+  color = c("dodgerblue3", "firebrick3")
+) +
+  theme_minimal() +
+  labs(
+    title = "Differential Word Keyness by Political Party",
+    subtitle = "Target = Democratic Party | Reference = Republican Party (Chi-squared measure)",
+    x = "Chi-squared Statistic"
+  )
+print(p_keyness)
+
+wf_model <- textmodel_wordfish(dfm_trimmed, dir = c(1, ndoc(dfm_trimmed)))
+
+metrics_df$Theta    <- wf_model$theta
+metrics_df$SE_Theta <- wf_model$se.theta
+
+cat("\nSummary of Wordfish Theta Estimates:\n")
+summary(metrics_df$Theta)
+
+textplot_scale1d(wf_model, margin = "documents")
+
+p_wf_time <- ggplot(metrics_df, aes(x = Year, y = Theta, color = Party)) +
+  geom_point(size = 3, alpha = 0.85) +
+  geom_errorbar(aes(ymin = Theta - 1.96 * SE_Theta, ymax = Theta + 1.96 * SE_Theta), width = 1.5, alpha = 0.4) +
+  geom_smooth(aes(group = 1), method = "loess", color = "darkgray", se = FALSE, linetype = "dashed") +
+  theme_minimal() +
+  labs(
+    title = "Wordfish Latent Dimension (Theta) Over Time",
+    subtitle = "Unsupervised scaling reveals clear chronological language evolution across centuries",
+    x = "Year", y = "Estimated Latent Position (Theta)"
+  )
+print(p_wf_time)
+
+textplot_scale1d(wf_model, margin = "features") +
+  labs(
+    title = "Wordfish Feature Estimates: Word Weight (Beta) vs Word Marginal Frequency (Psi)",
+    subtitle = "Outlier words have the highest discriminatory power across speeches"
+  )
+
+wf_features <- data.frame(
+  word = wf_model$features,
+  beta = wf_model$beta,
+  psi  = wf_model$psi,
+  stringsAsFactors = FALSE
+)
+
+cat("\nTop Words on Negative Scale (Historical/Early Era):\n")
+print(head(wf_features[order(wf_features$beta), c("word", "beta", "psi")], 10), row.names = FALSE)
+
+cat("\nTop Words on Positive Scale (Modern Era):\n")
+print(head(wf_features[order(-wf_features$beta), c("word", "beta", "psi")], 10), row.names = FALSE)
+
+```
+

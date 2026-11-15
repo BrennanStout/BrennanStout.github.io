@@ -43,4 +43,35 @@ Applications of GovInfo API
 :::
 ::::
 :::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Webscraping Workshop](workshop_scraping.qmd) {.card-title}
+
+Workshop on scraping of YouTube and books/quotes to scrape
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 6 Quanteda](assignment6_6302.qmd) {.card-title}
+
+Assignment on Quanteda and text analytics
+:::
+::::
+:::::
+
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 7 Quanteda](assignment7_6302.qmd) {.card-title}
+
+Assignment on Social media  and Youtube
+:::
+::::
+:::::
+
 ::::::::::::

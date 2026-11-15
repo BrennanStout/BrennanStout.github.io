@@ -53,10 +53,21 @@ write_csv(books_raw, "data/books_raw.csv") # cache the raw pull
 books <- clean_books(books_raw)
 print(mean(books$price))
 ```
+books.toscrape
+Data collected: text
+permission: terms
+Method: selector
+Cleaning rules: NA
+Known gaps: NA
+
 
 ### Checkpoint A. 
-nrow(books) is 100; price and rating are numeric; no NA in title. Then answer
-in one sentence each: what is the mean price by rating? Which line breaks first if the site is redesigned?
+What is the mean price by rating?
+The mean price of the books is £34.56
+
+Which line breaks first if the site is redesigned?
+The parse books function will break as it needs the html tags to remain consistent.
+
 
 ## Part 2
 
@@ -68,6 +79,7 @@ count_quotes("https://quotes.toscrape.com/")
 count_quotes("https://quotes.toscrape.com/js/")
 ```
 Where are the quotes in the source?
+The quotes are located under the quote element under the page.
 
 ```{r}
 library(httr2)
@@ -94,17 +106,22 @@ rectangle <- function(quote_list) {
    \(x) paste(unlist(x), collapse = "; "))) |>
   select(text, author_name, author_slug, tags)
 }
+print(Sys.time())
 rectangle(j$quotes)
+print(Sys.time())
 ```
 
 ```{r}
 pages <- list(); p <- 1
+print(Sys.time())
 repeat {
 pages[[p]] <- get_quotes(p)
 if (!pages[[p]]$has_next) break
 p <- p + 1
 }
 quotes <- map(pages, "quotes") |> list_flatten() |> rectangle()
+print(Sys.time())
+
 write_csv(quotes, "data/quotes.csv")
 ```
 
@@ -112,11 +129,24 @@ write_csv(quotes, "data/quotes.csv")
 live <- read_html_live("https://quotes.toscrape.com/js/")
 live |> html_elements(".quote .text") |> html_text2() # ten quotes
 live$view() 
+nrow(quotes)
 ```
+quotes.toscrape
+Data collected: text
+permission: terms
+Method: selector
+Cleaning rules: NA
+Known gaps: NA
+
 ### Checkpoint B. 
 nrow(quotes) is 100 from 10 pages. Routes 1 and 2 return the same text for page 1 —
 which was faster, and which made fewer demands on the server? Which would survive a redesign of the
 page?
+
+The first routes is much faster and will have made less demands as it does not need to look at the website in a loop.
+The second option appears to have more resilient to the website changes as it just reads the quotes and text and does not need to unpack the text on the website.
+
+
 
 ## Part 3:
 
@@ -132,7 +162,9 @@ hoist(statistics, views = "viewCount") |>
 select(id, title, channel, views)
 
 ```
-
-Five lines under your code, for each dataset: source and date collected; permission (robots.txt, terms,
-or a key); method (selector, endpoint or browser); cleaning rules applied; known gaps. This is the start
-of the datasheet your project proposal needs.
+YouTube
+Data collected: url, title, channel, and viewcount
+permission: api
+Method: selector
+Cleaning rules: Max 10 of US
+Known gaps: NA
