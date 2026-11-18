@@ -69,9 +69,18 @@ Assignment on Quanteda and text analytics
 ::: card-body
 ### [Assignment 7 Quanteda](assignment7_6302.qmd) {.card-title}
 
-Assignment on Social media  and Youtube
+Assignment on Social media and Youtube
 :::
 ::::
 :::::
 
+::::: {.g-col-12 .g-col-md-4}
+:::: {.card .h-100}
+::: card-body
+### [Assignment 8 Record Linkages](assignment8_6302.qmd) {.card-title}
+
+Assignment on record linkages with simulated administrative files, TRS and TEA.
+:::
+::::
+:::::
 ::::::::::::
